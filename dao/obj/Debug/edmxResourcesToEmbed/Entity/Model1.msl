@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="dataBaseTestModelStoreContainer" CdmEntityContainer="dataBaseTestEntities">
+    <EntitySetMapping Name="Accounts">
+      <EntityTypeMapping TypeName="dataBaseTestModel.Account">
+        <MappingFragment StoreEntitySet="Account">
+          <ScalarProperty Name="IDEmployee" ColumnName="IDEmployee" />
+          <ScalarProperty Name="FullName" ColumnName="FullName" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Details">
+      <EntityTypeMapping TypeName="dataBaseTestModel.Detail">
+        <MappingFragment StoreEntitySet="Detail">
+          <ScalarProperty Name="ErrorDesc2" ColumnName="ErrorDesc2" />
+          <ScalarProperty Name="SerialNumber" ColumnName="SerialNumber" />
+          <ScalarProperty Name="Model" ColumnName="Model" />
+          <ScalarProperty Name="ErrorCode" ColumnName="ErrorCode" />
+          <ScalarProperty Name="ErrorDesc" ColumnName="ErrorDesc" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="dataBaseTestModel.sysdiagram">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="dataBaseTestModel.Store.sp_alterdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="dataBaseTestModel.Store.sp_creatediagram" />
+    <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="dataBaseTestModel.Store.sp_dropdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="dataBaseTestModel.Store.sp_helpdiagramdefinition">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="dataBaseTestModel.sp_helpdiagramdefinition_Result">
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="dataBaseTestModel.Store.sp_helpdiagrams">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="dataBaseTestModel.sp_helpdiagrams_Result">
+          <ScalarProperty Name="Database" ColumnName="Database" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Owner" ColumnName="Owner" />
+          <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="dataBaseTestModel.Store.sp_renamediagram" />
+    <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="dataBaseTestModel.Store.sp_upgraddiagrams" />
+    <EntitySetMapping Name="addPCBs">
+      <EntityTypeMapping TypeName="dataBaseTestModel.addPCB">
+        <MappingFragment StoreEntitySet="addPCB">
+          <ScalarProperty Name="ReturnDate" ColumnName="ReturnDate" />
+          <ScalarProperty Name="UserOut" ColumnName="UserOut" />
+          <ScalarProperty Name="Borrower" ColumnName="Borrower" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Br_date" ColumnName="Br_date" />
+          <ScalarProperty Name="Approver_Br" ColumnName="Approver_Br" />
+          <ScalarProperty Name="Approver" ColumnName="Approver" />
+          <ScalarProperty Name="tray" ColumnName="tray" />
+          <ScalarProperty Name="sheft" ColumnName="sheft" />
+          <ScalarProperty Name="Repo" ColumnName="Repo" />
+          <ScalarProperty Name="ExitDate" ColumnName="ExitDate" />
+          <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+          <ScalarProperty Name="SerialNumber" ColumnName="SerialNumber" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_Search_Product" FunctionName="dataBaseTestModel.Store.sp_Search_Product">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="dataBaseTestModel.sp_Search_Product_Result">
+          <ScalarProperty Name="STT" ColumnName="STT" />
+          <ScalarProperty Name="SerialNumber" ColumnName="SerialNumber" />
+          <ScalarProperty Name="Model" ColumnName="Model" />
+          <ScalarProperty Name="ErrorCode" ColumnName="ErrorCode" />
+          <ScalarProperty Name="ErrorDesc" ColumnName="ErrorDesc" />
+          <ScalarProperty Name="ErrorDesc2" ColumnName="ErrorDesc2" />
+          <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+          <ScalarProperty Name="ExitDate" ColumnName="ExitDate" />
+          <ScalarProperty Name="Repo" ColumnName="Repo" />
+          <ScalarProperty Name="Sheft" ColumnName="Sheft" />
+          <ScalarProperty Name="Tray" ColumnName="Tray" />
+          <ScalarProperty Name="Approver" ColumnName="Approver" />
+          <ScalarProperty Name="Borrower" ColumnName="Borrower" />
+          <ScalarProperty Name="Borrow_Date" ColumnName="Borrow Date" />
+          <ScalarProperty Name="BorrowStatus" ColumnName="BorrowStatus" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_SearchBySN" FunctionName="dataBaseTestModel.Store.sp_SearchBySN">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="dataBaseTestModel.sp_SearchBySN_Result">
+          <ScalarProperty Name="STT" ColumnName="STT" />
+          <ScalarProperty Name="Serial_Number" ColumnName="Serial Number" />
+          <ScalarProperty Name="Model" ColumnName="Model" />
+          <ScalarProperty Name="Error_Code" ColumnName="Error Code" />
+          <ScalarProperty Name="Error_Description" ColumnName="Error Description" />
+          <ScalarProperty Name="Error_Description_2" ColumnName="Error Description 2" />
+          <ScalarProperty Name="Entry_Date" ColumnName="Entry Date" />
+          <ScalarProperty Name="Exit_Date" ColumnName="Exit Date" />
+          <ScalarProperty Name="Repository" ColumnName="Repository" />
+          <ScalarProperty Name="Shelf" ColumnName="Shelf" />
+          <ScalarProperty Name="Tray" ColumnName="Tray" />
+          <ScalarProperty Name="Approver" ColumnName="Approver" />
+          <ScalarProperty Name="Borrower" ColumnName="Borrower" />
+          <ScalarProperty Name="Borrow_Date" ColumnName="Borrow Date" />
+          <ScalarProperty Name="BorrowStatus" ColumnName="BorrowStatus" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="UpdateBorrow" FunctionName="dataBaseTestModel.Store.UpdateBorrow" />
+    <EntitySetMapping Name="ExportedPCBs">
+      <EntityTypeMapping TypeName="dataBaseTestModel.ExportedPCB">
+        <MappingFragment StoreEntitySet="ExportedPCBs">
+          <ScalarProperty Name="UserOut" ColumnName="UserOut" />
+          <ScalarProperty Name="UserIn" ColumnName="UserIn" />
+          <ScalarProperty Name="ExitDate" ColumnName="ExitDate" />
+          <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+          <ScalarProperty Name="SerialNumber" ColumnName="SerialNumber" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="UpdateBorrowNe" FunctionName="dataBaseTestModel.Store.UpdateBorrowNe" />
+    <FunctionImportMapping FunctionImportName="ReturnPCBToWarehouse" FunctionName="dataBaseTestModel.Store.ReturnPCBToWarehouse" />
+  </EntityContainerMapping>
+</Mapping>

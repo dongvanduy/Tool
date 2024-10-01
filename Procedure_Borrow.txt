@@ -1,0 +1,61 @@
+CREATE PROCEDURE [dbo].[UpdatePCBForBorrow]
+    @SerialNumbers NVARCHAR(MAX),
+    @Borrower NCHAR(8),
+    @Approver_Br NCHAR(8),
+    @Br_date DATETIME,
+    @AlreadyBorrowedSerialNumbers NVARCHAR(MAX) OUTPUT  -- Thêm tham số để trả về danh sách serials đã được mượn
+AS
+BEGIN
+    -- Tách danh sách SerialNumber bằng dấu phẩy
+    DECLARE @SerialNumber NVARCHAR(10)
+    DECLARE @Pos INT
+    SET @AlreadyBorrowedSerialNumbers = '' -- Khởi tạo chuỗi serial đã mượn
+
+    -- Dùng WHILE loop để tách từng SerialNumber ra và cập nhật từng cái một
+    WHILE LEN(@SerialNumbers) > 0
+    BEGIN
+        -- Tìm vị trí dấu phẩy
+        SET @Pos = CHARINDEX(',', @SerialNumbers)
+        
+        -- Nếu có dấu phẩy, tách SerialNumber ra, nếu không thì lấy cái cuối cùng
+        IF @Pos > 0
+        BEGIN
+            SET @SerialNumber = LTRIM(RTRIM(SUBSTRING(@SerialNumbers, 1, @Pos - 1)))
+            SET @SerialNumbers = SUBSTRING(@SerialNumbers, @Pos + 1, LEN(@SerialNumbers) - @Pos)
+        END
+        ELSE
+        BEGIN
+            SET @SerialNumber = LTRIM(RTRIM(@SerialNumbers))
+            SET @SerialNumbers = ''
+        END
+
+        -- Kiểm tra nếu PCB đã được mượn (Status = 1)
+        IF EXISTS (SELECT 1 FROM dbo.addPCB WHERE SerialNumber = @SerialNumber AND Status = 1)
+        BEGIN
+            -- Nếu PCB đã được mượn, thêm serial vào danh sách AlreadyBorrowedSerialNumbers
+            SET @AlreadyBorrowedSerialNumbers = @AlreadyBorrowedSerialNumbers + @SerialNumber + ','
+        END
+        ELSE
+        BEGIN
+            -- Cập nhật bảng addPCB dựa trên SerialNumber
+            UPDATE dbo.addPCB
+            SET 
+                Borrower = @Borrower,
+                Approver_Br = @Approver_Br,
+                Br_date = @Br_date,
+                Status = 1  -- Đánh dấu rằng PCB này đã được cho mượn
+            WHERE SerialNumber = @SerialNumber
+        END
+    END
+
+    -- Loại bỏ dấu phẩy cuối cùng nếu có
+    IF LEN(@AlreadyBorrowedSerialNumbers) > 0
+    BEGIN
+        SET @AlreadyBorrowedSerialNumbers = LEFT(@AlreadyBorrowedSerialNumbers, LEN(@AlreadyBorrowedSerialNumbers) - 1)
+    END
+END
+GO
+Giải thích:
+@AlreadyBorrowedSerialNumbers NVARCHAR(MAX) OUTPUT: Tham số này sẽ lưu danh sách các serial numbers đã được mượn trước đó.
+Kiểm tra Status = 1: Chúng ta sẽ kiểm tra nếu PCB đã được mượn (giá trị Status = 1). Nếu đúng, serial number đó sẽ được thêm vào danh sách @AlreadyBorrowedSerialNumbers và không cập nhật dữ liệu cho serial đó.
+Kết quả: Nếu serial chưa được mượn, thông tin sẽ được cập nhật, nếu đã mượn, serial sẽ bị bỏ qua và thêm vào danh sách.

@@ -1,0 +1,157 @@
+﻿@model IEnumerable<RE_Tool.Models.PCBModel>
+@{ int i = 0;}
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta charset="utf-8" />
+    <title>Index</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+</head>
+<body>
+    <!-- ======= Sidebar ======= -->
+    <aside id="sidebar" class="sidebar">
+
+        <ul class="sidebar-nav" id="sidebar-nav">
+
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("Index", "Home")">
+                    <i class="bi bi-grid"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li><!-- End Dashboard Nav -->
+
+            <li class="nav-item">
+                @{
+                    var user = RE_Tool.App_Start.SessionConfig.GetUser();
+                }
+                @if (user != null)
+                {
+                    <a class="nav-link collapsed" href="@Url.Action("Home", "Admin")">
+                        <i class="bi bi-person"></i><span>Admin</span>
+                    </a>
+                }
+                else
+                {
+                    <a class="nav-link collapsed" href="@Url.Action("User/Login", "Admin")">
+                        <i class="bi bi-person"></i><span>Admin</span>
+                    </a>
+                }
+
+
+            </li><!-- End Charts Nav -->
+
+        </ul>
+    </aside><!-- End Sidebar-->
+    <!-- ======= Header ======= -->
+    <section class="section">
+        <form id="search-form" class="form-inline">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <select id="search-options" class="form-select" aria-label="Default select example">
+                            <option selected>Open this select menu</option>
+                            <option value="SEARCH_S/N">SEARCH S/N</option>
+                            <option value="SEARCH_RP">SEARCH REPOSITORY</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+
+        <!-- Table with Search and Scrollable Columns -->
+        <form id="serial-number-form" method="post">
+            <div id="text-inputs">
+                <div id="input-sn" class="hidden col-md-6">
+                    <!--<label for="sn-input"></label>-->
+                    <textarea name="serialNumbers" id="sn-input" class="form-control mt-4" rows="5" placeholder="Serial Number List"></textarea>
+                    <div class="col-md-4">
+                        <button id="search-btn" class="btn btn-primary mt-4" type="button" onclick="submitSerialNumberForm()">Search</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <form id="repository-form" method="post">
+            <div class="row hidden mt-4" id="rp-row">
+                <div class="col-md-4 d-none" id="select-rp">
+                    <div class="form-group">
+                        <!--<label for="search-repo" class="form-label">Repository</label>-->
+                        <select name="repository" id="search-repo" class="form-select" aria-label="Default select example">
+                            <option value="">ALL</option>
+                            <option value="B36R">B36R</option>
+                            <option value="B28M">B28M</option>
+                            <option value="B30M">B30M</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <!--<label for="code-error-input"></label>-->
+                    <input name="errorCode" type="text" id="code-error-input" class="form-control" placeholder="Code Error">
+                </div>
+                <div class="col-md-4">
+                    <!--<label for="des-code-error-input"></label>-->
+                    <input name="errorDesc" type="text" id="des-code-error-input" class="form-control" placeholder="Error description">
+                </div>
+                <div class="col-md-4">
+                    <!--<label for="status-input"></label>-->
+                    <input name="status" type="text" id="status-input" class="form-control mt-4" placeholder="Status">
+                </div>
+                <div class="col-md-4">
+                    <button id="search-btn-2" class="btn btn-primary mt-4" type="button" onclick="submitRepositoryForm()">Search</button>
+                </div>
+            </div>
+        </form>
+
+        <div id="results-section">
+
+        </div>
+
+
+        <script>
+    // Hàm xử lý gửi form tìm kiếm theo Serial Number
+    function submitSerialNumberForm() {
+        var formData = {
+            serialNumbers: $('#sn-input').val()  // Lấy dữ liệu từ textarea
+        };
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("SearchProductSN", "Home")',  // Gọi hành động trong controller
+            data: formData,
+            success: function (response) {
+                $('#results-section').html(response);  // Cập nhật kết quả vào phần tử HTML
+            },
+            error: function (xhr, status, error) {
+                console.log("Error occurred: " + error);
+            }
+        });
+    }
+
+    // Hàm xử lý gửi form tìm kiếm theo Repository và Error Code
+    function submitRepositoryForm() {
+        var formData = {
+            repository: $('#search-repo').val()||null,
+            errorCode: $('#code-error-input').val() || null,
+            errorDesc: $('#des-code-error-input').val() || null,
+            status: $('#status-input').val()||null
+        };
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("SearchProductNe", "Home")',  // Gọi hành động trong controller
+            data: formData,
+            success: function (response) {
+                $('#results-section').html(response);  // Cập nhật kết quả vào phần tử HTML
+            },
+            error: function (xhr, status, error) {
+                console.log("Error occurred: " + error);
+            }
+        });
+    }
+        </script>
+
+    </section>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+</body>
+</html>

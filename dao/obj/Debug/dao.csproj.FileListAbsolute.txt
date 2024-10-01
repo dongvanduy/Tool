@@ -1,0 +1,14 @@
+C:\Users\duy\Desktop\duY\RE_Tool\dao\bin\Debug\dao.dll.config
+C:\Users\duy\Desktop\duY\RE_Tool\dao\bin\Debug\dao.dll
+C:\Users\duy\Desktop\duY\RE_Tool\dao\bin\Debug\dao.pdb
+C:\Users\duy\Desktop\duY\RE_Tool\dao\bin\Debug\EntityFramework.dll
+C:\Users\duy\Desktop\duY\RE_Tool\dao\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\duy\Desktop\duY\RE_Tool\dao\bin\Debug\Newtonsoft.Json.dll
+C:\Users\duy\Desktop\duY\RE_Tool\dao\bin\Debug\EntityFramework.xml
+C:\Users\duy\Desktop\duY\RE_Tool\dao\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\duy\Desktop\duY\RE_Tool\dao\bin\Debug\Newtonsoft.Json.xml
+C:\Users\duy\Desktop\duY\RE_Tool\dao\obj\Debug\dao.csproj.AssemblyReference.cache
+C:\Users\duy\Desktop\duY\RE_Tool\dao\obj\Debug\dao.csproj.CoreCompileInputs.cache
+C:\Users\duy\Desktop\duY\RE_Tool\dao\obj\Debug\dao.csproj.Up2Date
+C:\Users\duy\Desktop\duY\RE_Tool\dao\obj\Debug\dao.dll
+C:\Users\duy\Desktop\duY\RE_Tool\dao\obj\Debug\dao.pdb

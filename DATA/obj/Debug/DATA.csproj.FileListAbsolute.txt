@@ -1,0 +1,12 @@
+C:\Users\PC-PRIVATE\Desktop\duY\RE_Tool\DATA\bin\Debug\DATA.dll.config
+C:\Users\PC-PRIVATE\Desktop\duY\RE_Tool\DATA\bin\Debug\DATA.dll
+C:\Users\PC-PRIVATE\Desktop\duY\RE_Tool\DATA\bin\Debug\DATA.pdb
+C:\Users\PC-PRIVATE\Desktop\duY\RE_Tool\DATA\bin\Debug\EntityFramework.dll
+C:\Users\PC-PRIVATE\Desktop\duY\RE_Tool\DATA\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\PC-PRIVATE\Desktop\duY\RE_Tool\DATA\bin\Debug\EntityFramework.xml
+C:\Users\PC-PRIVATE\Desktop\duY\RE_Tool\DATA\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\PC-PRIVATE\Desktop\duY\RE_Tool\DATA\obj\Debug\DATA.csproj.AssemblyReference.cache
+C:\Users\PC-PRIVATE\Desktop\duY\RE_Tool\DATA\obj\Debug\DATA.csproj.CoreCompileInputs.cache
+C:\Users\PC-PRIVATE\Desktop\duY\RE_Tool\DATA\obj\Debug\DATA.csproj.CopyComplete
+C:\Users\PC-PRIVATE\Desktop\duY\RE_Tool\DATA\obj\Debug\DATA.dll
+C:\Users\PC-PRIVATE\Desktop\duY\RE_Tool\DATA\obj\Debug\DATA.pdb

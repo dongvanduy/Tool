@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ES6", // Hoặc ES2015 để hỗ trợ Map, Set và các tính năng mới
+    "lib": [ "ES6", "DOM" ], // Thêm ES6 để hỗ trợ Map và các thư viện DOM
+    "module": "commonjs",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "exclude": [
+    "node_modules",
+    "wwwroot"
+  ]
+}

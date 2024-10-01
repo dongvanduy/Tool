@@ -1,0 +1,475 @@
+﻿
+@using RE_Tool.Areas.Admin.Models
+@model RE_Tool.Areas.Admin.Models.PCBModel
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta charset="utf-8" />
+    <link href="~/Areas/Admin/Content/bootstrap.css" rel="stylesheet" />
+</head>
+<body>
+    <!-- ======= Sidebar ======= -->
+    <aside id="sidebar" class="sidebar">
+
+        <ul class="sidebar-nav" id="sidebar-nav">
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="~/Home/Index">
+                    <i class="bi bi-grid"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li><!-- End Dashboard Nav -->
+
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("Index", "Home")">
+                    <i class="bi bi-person"></i><span>Admin</span>
+                </a>
+            </li><!-- End Charts Nav -->
+        </ul>
+    </aside><!-- End Sidebar-->
+    <!--CHỌN CHỨC NĂNG TRONG ADMIN-->
+    <form id="admin-form" class="form-inline">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <select id="admin-options" class="form-select" aria-label="Default select example">
+                        <option selected>Open this select menu</option>
+                        <option value="ADD_PCB">THÊM PCB</option>
+                        <option value="EXPORT_PCB">XUẤT PCB</option>
+                        <option value="BORROW_PCB">MƯỢN PCB</option>
+                        <option value="RETURN_PCB">TRẢ PCB</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </form>
+    <!--END ADMIN-->
+    <!--START ADD PCB VAO KHO -->
+    <section class="section">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @using (Html.BeginForm("AddPCB", "Home", FormMethod.Post, new { id = "pcbForm" }))
+        {
+            <div id="option-list" class="col-12 mt-3 hidden">
+                <div class="card recent-sales overflow-auto">
+                    <div class="card-body">
+
+                        <table class="table table-bordered" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>SERIAL NUMBER</th>
+                                    <th>ENTRY DATE</th>
+                                    <th>REPOSITORY</th>
+                                    <th>SHEFT</th>
+                                    <th>TRAY</th>
+                                    <th>USER IN</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th>#2457</th>
+                                    <td>
+                                        <div class="col-md-12">
+                                            <textarea id="sn-add" name="serialNumber" value="@Model.SerialNumber" class="form-control" rows="5" cols="40" placeholder="Serial Number List"></textarea>
+                                        </div>
+                                    </td>
+                                    <td><input name="EntryDate" type="datetime-local" value="@Html.Raw(DateTime.Now.ToString("yyyy-MM-ddTHH:mm"))" class="form-control" /></td>
+                                    <!--<td><input type="date" class="form-control" id="entry-date" name=" entry-date" /></td>-->
+                                    <td>
+                                        <select id="add-pcb-repo" name="Repository" class="form-select" aria-label="Default select example">
+                                            <option selected>Repository</option>
+                                            <option value="B36R" @(Model.Repository == "B36R" ? "selected" : "")>B36R</option>
+                                            <option value="B28M" @(Model.Repository == "B28M" ? "selected" : "")>B28M</option>
+                                            <option value="B30M" @(Model.Repository == "B30M" ? "selected" : "")>B30M</option>
+                                        </select>
+                                    </td>
+                                    <td> <input type="text" name="sheft" class="form-control"></td>
+                                    <td> <input type="text" name="tray" class="form-control"></td>
+                                    <td> <input type="text" name="Approver" class="form-control"></td>
+                                </tr>
+                                <!-- Add more rows as needed -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div>
+                    <!--<button type="button" class="btn btn-success rounded-pill">Success</button>-->
+                    <button>Send</button>
+                </div>
+            </div>
+        }
+
+        <!--END ADD PCB VAO KHO-->
+        <!--MƯỢN BẢN TRONG KHO-->
+        @using (Html.BeginForm("BorrowPCB", "Home", FormMethod.Post, new { id = "borrowForm" }))
+        {
+            <div id="option-borrow" class="col-12 mt-3 hidden">
+                <div class="card recent-sales overflow-auto">
+                    <div class="card-body">
+                        <!-- Search Section -->
+                        <table class="table table-bordered" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>SERIAL NUMBER</th>
+                                    <th>ENTRY DATE</th>
+                                    <th>BORROWER</th>
+                                    <th>APPROVER</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th></th>
+                                    <td>
+                                        <textarea name="SerialNumber" id="sn-add" class="form-control" rows="5" cols="40" placeholder="Serial Number List"></textarea>
+                                    </td>
+                                    <!--<td><input type="date" class="form-control" id="borrow-date" name="borrow-date" /></td>-->
+                                    <td><input name="BorrowDate" type="datetime-local" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" class="form-control" /></td>
+                                    <td><input name="Borrower" type="text" class="form-control"></td>
+                                    <td><input name="Approver" type="text" class="form-control"></td>
+                                </tr>
+                                <!-- Add more rows as needed -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-success rounded-pill mt-4">Mượn</button>
+                </div>
+            </div>
+        }
+        <!--END BORROW-->
+        <!--XUẤT BẢN RA KHỎI KHO-->
+        @using (Html.BeginForm("ExportPCB", "Home", FormMethod.Post, new { id = "exportForm" }))
+        {
+            <div id="option-out" class="col-12 mt-3 hidden">
+                <div class="card recent-sales overflow-auto">
+                    <div class="card-body">
+                        <!-- Search Section -->
+                        <table class="table table-bordered" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>SERIAL_NUMBER</th>
+                                    <th>EXIT_DATE</th>
+                                    <th>APPROVER</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th>#2457</th>
+                                    <td>
+                                        <textarea name="SerialNumber" id="sn-add" class="form-control" rows="5" placeholder="Serial Number List"></textarea>
+                                    </td>
+                                    <!--<td><input type="date" class="form-control" id="out-date" name="out-date" /></td>-->
+                                    <td><input name="ExitDate" type="datetime-local" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" class="form-control" /></td>
+                                    <td><input name="ApproverOut" type="text" class="form-control"></td>
+                                </tr>
+                                <!-- Add more rows as needed -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-success rounded-pill mt-4">Submit</button>
+
+                </div>
+            </div>
+        }
+
+
+
+        @using (Html.BeginForm("ReturnPCB", "Home", FormMethod.Post, new { id = "returnForm" }))
+        {
+            <div id="option-return" class="col-12 mt-3 hidden">
+                <div class="card recent-sales overflow-auto">
+                    <div class="card-body">
+                        <!-- Search Section -->
+                        <table class="table table-bordered" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>SERIAL_NUMBER</th>
+                                    <th>RETURN_DATE</th>
+                                    <th>REPOSITORY</th>
+                                    <th>SHEFT</th>
+                                    <th>TRAY</th>
+                                    <th>APPROVER</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th>#2457</th>
+                                    <td>
+                                        <textarea name="SerialNumber" id="sn-add" class="form-control" rows="5" placeholder="Serial Number List"></textarea>
+                                    </td>
+                                    <!--<td><input type="date" class="form-control" id="out-date" name="out-date" /></td>-->
+                                    <td><input name="ReturnDate" type="datetime-local" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" class="form-control" /></td>
+                                    <td>
+                                        <select id="add-pcb-repo" name="Repository" class="form-select" aria-label="Default select example">
+                                            <option selected>Repository</option>
+                                            <option value="B36R" @(Model.Repository == "B36R" ? "selected" : "")>B36R</option>
+                                            <option value="B28M" @(Model.Repository == "B28M" ? "selected" : "")>B28M</option>
+                                            <option value="B30M" @(Model.Repository == "B30M" ? "selected" : "")>B30M</option>
+                                        </select>
+                                    </td>
+                                    <td> <input type="text" name="sheft" class="form-control"></td>
+                                    <td> <input type="text" name="tray" class="form-control"></td>
+                                    <td> <input type="text" name="Approver" class="form-control"></td>
+                                </tr>
+                                <!-- Add more rows as needed -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-success rounded-pill mt-4">Submit</button>
+
+                </div>
+            </div>
+        }
+
+
+    </section>
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+        //Function xử lý định dạng ngày tháng JSON -> DateTime
+        function formatDate(jsonDate)
+        {
+                var date = new Date(parseInt(jsonDate.substr(6))); // Trích xuất timestamp từ chuỗi
+                var day = date.getDate().toString().padStart(2, '0');
+                var month = (date.getMonth() + 1).toString().padStart(2, '0'); // Lưu ý tháng bắt đầu từ 0
+                var year = date.getFullYear();
+                var hours = date.getHours().toString().padStart(2, '0');
+                var minutes = date.getMinutes().toString().padStart(2, '0');
+                return day + "/" + month + "/" + year + " " + hours + ":" + minutes; // Định dạng ngày theo dd/mm/yyyy hh:mm
+        }
+
+
+    //ACTION THÊM PCB VÀO KHO===============================
+        // Bắt sự kiện submit của form
+        $('#pcbForm').on('submit', function(event) {
+            event.preventDefault(); // Ngăn form thực hiện hành vi submit mặc định (reload)
+
+            var formData = $(this).serialize(); // Lấy dữ liệu từ form
+
+            // Ẩn thông báo cũ trước khi gửi dữ liệu
+            $('#successMessage').hide();
+            $('#errorMessage').hide();
+
+            // Gửi dữ liệu bằng AJAX
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("AddPCB", "Home")', // Gọi đến action AddPCB trong HomeController
+                data: formData,
+                success: function (response) {
+                    $('textarea[name="serialNumber"]').val('');
+                    $('input[name="sheft"]').val('');
+                    $('input[name= "Repository"]').val('');
+                    $('input[name="tray"]').val('');
+                    $('input[name="EntryDate"]').val('');
+                    $('input[name="Approver"]').val('');
+                    if (response.Success) {
+
+                        // Hiển thị thông báo thành công (hàng xanh)
+                        $('#successMessage').html(response.Message).show();
+
+                        // Hiển thị danh sách serial number đã thêm thành công
+                        var successList = "<table class='table table-bordered'><thead><tr><th>STT</th><th>Serial Number</th><th>Entry Date</th><th>Repository</th><th>Sheft</th><th>Tray</th><th>Approver</th></tr></thead><tbody>";
+                        $.each(response.AddedPCBs, function (index, pcb) {
+                            var formattedDate = formatDate(pcb.EntryDate); // Chuyển đổi date từ JSON -> DateTime
+                            successList += "<tr><td>"+(index + 1)+"</td><td>" + pcb.SerialNumber + "</td><td>" + formattedDate + "</td><td>" + pcb.Repository + "</td><td>" + pcb.Sheft + "</td><td>" + pcb.Tray + "</td><td>" + pcb.Approver + "</td></tr>";
+                        });
+                        successList += "</tbody></table>";
+                        $('#successMessage').html(successList); // Hiển thị trên giao diện
+                    } else {
+
+                        $('#errorMessage').html(response.Message).show();
+
+                        // Hiển thị thông báo lỗi cho các serial number bị trùng
+                        var errorList = "<ul>";
+                        $.each(response.DuplicateSerialNumbers, function(index, sn) {
+                            errorList += "<li>" + sn + " đã tồn tại trong cơ sở dữ liệu</li>";
+                        });
+                        errorList += "</ul>";
+                        $('#errorMessage').html(errorList); // Hiển thị trên giao diện
+
+                        // Hiển thị thông báo lỗi
+                        //alert(response.Message);
+                    }
+                },
+                error: function() {
+                    //alert("Đã xảy ra lỗi trong quá trình gửi dữ liệu.");
+                    $('#errorMessage').html("Đã xảy ra lỗi trong quá trình gửi dữ liệu.").show();
+                }
+            });
+        });
+
+
+    //ACTION CHO MƯỢN PCB===================================
+    $('#borrowForm').on('submit', function (event) {
+    event.preventDefault(); // Ngăn việc submit form mặc định
+
+    var formData = $(this).serialize();
+
+    // Ẩn các thông báo trước đó
+    $('#successMessage').hide();
+    $('#errorMessage').hide();
+
+    // Gửi dữ liệu bằng AJAX
+    $.ajax({
+        type: "POST",
+        url: '@Url.Action("BorrowPCB", "Home")',
+        data: formData,
+        success: function (response) {
+            // Xóa dữ liệu trong các ô input
+            $('textarea[name="SerialNumber"]').val('');
+            $('input[name="Borrower"]').val('');
+            $('input[name="Approver"]').val('');
+            $('input[name="BorrowDate"]').val('');
+            if (response.Success) {
+                $('#successMessageBr').html("<strong>" + response.Message + "</strong>").show();
+                var tableHtml = "<table class = 'table table-bordered'><thead><tr><th>STT</th><th>SERIAL NUMBER</th><th>NGÀY MƯỢN</th><th>NGƯỜI MƯỢN</th><th>NGƯỜI PHÊ DUYỆT</th></tr></thead><tbody>";
+                $.each(response.AddedPCBs, function (index, pcb) {
+                    var formattedDate = formatDate(pcb.BorrowDate); // Chuyển đổi date từ JSON -> DateTime
+                    tableHtml += "<tr><td>" + (index + 1) + "</td><td>" + pcb.SerialNumber + "</td><td>" + formattedDate + "</td><td>" + pcb.Borrower + "</td><td>" + pcb.Approver + "</td></tr>";
+                });
+                tableHtml += "</tbody></table>";
+
+                $('#successMessage').append(tableHtml).show();
+            }
+            else {
+                var errorList = "<strong>" + response.Message + "</strong><br/>Các serial bị trùng: "
+                    + response.DuplicateSerialNumbers.join(", ");
+                $('#errorMessage').html(errorList).show();
+
+            }
+        },
+        error: function () {
+            $('#errorMessage').html("Đã xảy ra lỗi trong quá trình xử lý.").show();
+        }
+    });
+
+        });
+
+    //ACTION XUẤT PCB========================================
+        $('#exportForm').on('submit', function (event) {
+    event.preventDefault(); // Ngăn việc submit form mặc định
+
+    var formData = $(this).serialize();
+
+    // Ẩn các thông báo trước đó
+    $('#successMessage').hide();
+    $('#errorMessage').hide();
+
+    // Gửi dữ liệu bằng AJAX
+    $.ajax({
+        type: "POST",
+        url: '@Url.Action("ExportPCB", "Home")' ,
+        data: formData,
+        success: function (response) {
+        if (response.Success) {
+        // Hiển thị thông báo thành công
+        $('#successMessage').html("<strong>" + response.Message + "</strong><br/>").show();
+
+                // Hiển thị danh sách serial đã xuất kho thành công
+            var tableHtml = "<table class='table table-bordered'><thead><tr><th>STT</th><th>SERIAL NUMBER</th><th>NGÀY XUẤT KHO</th><th>NGƯỜI XUẤT KHO</th></tr></thead><tbody>";
+                $.each(response.AddedPCBs, function (index, pcb) {
+                    var formattedDate = formatDate(pcb.ExitDate); // Chuyển đổi date từ JSON -> DateTime
+                    tableHtml += "<tr><td>" + (index + 1) + "</td><td>" + pcb.SerialNumber + "</td><td>" + formattedDate + "</td><td>" + pcb.ApproverOut + "</td></tr>";
+                });
+                tableHtml += "</tbody></table>";
+
+                $('#successMessage').append(tableHtml).show();
+
+                // Xóa dữ liệu trong các ô input
+                $('textarea[name="SerialNumber"]').val('');
+                $('input[name="UserOut"]').val('');
+                $('input[name="ExitDate"]').val('');
+
+            } else {
+                // Hiển thị thông báo lỗi
+                var errorList = "<strong>" + response.Message + "</strong><br/>Số serial không tồn tại: " + response.DuplicateSerialNumbers.join(", ");
+                $('#errorMessage').html(errorList).show();
+            }
+        },
+        error: function () {
+            $('#errorMessage').html("Đã xảy ra lỗi trong quá trình xử lý.").show();
+        }
+    });
+});
+
+
+    //ACTION TRẢ BẢN VÀO KHO
+    $('#borrowForm').on('submit', function (event) {
+    event.preventDefault(); // Ngăn việc submit form mặc định
+
+    var formData = $(this).serialize();
+
+    // Ẩn các thông báo trước đó
+    $('#successMessage').hide();
+    $('#errorMessage').hide();
+
+    // Gửi dữ liệu bằng AJAX
+    $.ajax({
+        type: "POST",
+        url: '@Url.Action("ReturnPCB", "Home")',
+        data: formData,
+        success: function (response) {
+            // Xóa dữ liệu trong các ô input
+            $('textarea[name="SerialNumber"]').val('');
+            $('input[name="Borrower"]').val('');
+            $('input[name="Approver"]').val('');
+            $('input[name="BorrowDate"]').val('');
+            if (response.Success) {
+                $('#successMessageBr').html("<strong>" + response.Message + "</strong>").show();
+                var tableHtml = "<table class = 'table table-bordered'><thead><tr><th>STT</th><th>SERIAL NUMBER</th><th>NGÀY MƯỢN</th><th>NGƯỜI MƯỢN</th><th>NGƯỜI PHÊ DUYỆT</th></tr></thead><tbody>";
+                $.each(response.AddedPCBs, function (index, pcb) {
+                    var formattedDate = formatDate(pcb.BorrowDate); // Chuyển đổi date từ JSON -> DateTime
+                    tableHtml += "<tr><td>" + (index + 1) + "</td><td>" + pcb.SerialNumber + "</td><td>" + formattedDate + "</td><td>" + pcb.Borrower + "</td><td>" + pcb.Approver + "</td></tr>";
+                });
+                tableHtml += "</tbody></table>";
+
+                $('#successMessage').append(tableHtml).show();
+            }
+            else {
+                var errorList = "<strong>" + response.Message + "</strong><br/>Các serial bị trùng: "
+                    + response.DuplicateSerialNumbers.join(", ");
+                $('#errorMessage').html(errorList).show();
+
+            }
+        },
+        error: function () {
+            $('#errorMessage').html("Đã xảy ra lỗi trong quá trình xử lý.").show();
+        }
+    });
+
+        });
+
+
+
+        });
+    </script>
+
+
+    <!-- Vùng để hiển thị các serial number đã thêm thành công -->
+    <div id="successMessage" class="alert alert-success mt-3" style="display:none;"></div>
+
+    <!-- Vùng để hiển thị các serial number bị trùng -->
+    <div id="errorMessage" class="alert alert-danger mt-3" style="display:none;"></div>
+
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+</body>
+</html>

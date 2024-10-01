@@ -1,0 +1,51 @@
+﻿@model IEnumerable<RE_Tool.Models.PCBModel>
+@{ int i = 0;}
+@if (Model != null && Model.Any())
+{
+    <table class="table table-bordered" style="width:100%">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>SERIAL_NUMBER</th>
+                <th>MODEL_NAME</th>
+                <th>ERROR_CODE</th>
+                <th>ERROR_DESC</th>
+                <th>ERROR_DESC2</th>
+                <th>ENTRY_DATE</th>
+                <th>EXIT_DATE</th>
+                <th>REPOSITORY</th>
+                <th>SHEFT</th>
+                <th>TRAY</th>
+                <th>APPROVER(IN)</th>
+                <th>BORROWER</th>
+                <th>LENDING_DATE</th>
+                <th>APPROVER(BR)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@(++i)</td>
+                    <td>@item.SerialNumber</td>
+                    <td>@item.ModelName</td>
+                    <td>@item.ErrorCode</td>
+                    <td>@item.ErrorDesc</td>
+                    <td>@item.ErrorDesc2</td>
+                    <td>@item.EntryDate</td>
+                    <td>@item.ExitDate</td>
+                    <td>@item.Repo</td>
+                    <td>@item.Sheft</td>
+                    <td>@item.Tray</td>
+                    <td>@item.Approver</td>
+                    <td>@item.Borrower</td>
+                    <td>@item.BorrowDate</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Không có kết quả nào được tìm thấy.</p>
+}

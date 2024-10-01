@@ -1,0 +1,262 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="dataBaseTestModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Account">
+    <Key>
+      <PropertyRef Name="IDEmployee" />
+    </Key>
+    <Property Name="IDEmployee" Type="String" MaxLength="8" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="FullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Detail">
+    <Key>
+      <PropertyRef Name="SerialNumber" />
+    </Key>
+    <Property Name="SerialNumber" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Model" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="ErrorCode" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+    <Property Name="ErrorDesc" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+    <Property Name="ErrorDesc2" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityContainer Name="dataBaseTestEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Accounts" EntityType="Self.Account" />
+    <EntitySet Name="Details" EntityType="Self.Detail" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(dataBaseTestModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(dataBaseTestModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+    <EntitySet Name="addPCBs" EntityType="dataBaseTestModel.addPCB" />
+    <FunctionImport Name="sp_SearchProduct" ReturnType="Collection(dataBaseTestModel.sp_Search_Product_Result)">
+      <Parameter Name="Repository" Mode="In" Type="String" />
+      <Parameter Name="ErrorCode" Mode="In" Type="String" />
+      <Parameter Name="Status" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_SearchProductBySerialNumber" ReturnType="Collection(dataBaseTestModel.sp_SearchProductBySerialNumber_Result)">
+      <Parameter Name="SerialNumber" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_Search_Product" ReturnType="Collection(dataBaseTestModel.sp_Search_Product_Result)">
+      <Parameter Name="Repository" Mode="In" Type="String" />
+      <Parameter Name="ErrorCode" Mode="In" Type="String" />
+      <Parameter Name="ErrorDesc" Mode="In" Type="String" />
+      <Parameter Name="Status" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_SearchBySerialNumber" ReturnType="Collection(dataBaseTestModel.sp_SearchBySerialNumber_Result)">
+      <Parameter Name="SerialNumber" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="UpdatePCBForBorrow">
+      <Parameter Name="SerialNumbers" Mode="In" Type="String" />
+      <Parameter Name="Borrower" Mode="In" Type="String" />
+      <Parameter Name="Approver_Br" Mode="In" Type="String" />
+      <Parameter Name="Br_date" Mode="In" Type="DateTime" />
+      <Parameter Name="AlreadyBorrowedSerialNumbers" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_SearchBySN" ReturnType="Collection(dataBaseTestModel.sp_SearchBySN_Result)">
+      <Parameter Name="SerialNumber" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="UpdateBorrow">
+      <Parameter Name="SerialNumbers" Mode="In" Type="String" />
+      <Parameter Name="Borrower" Mode="In" Type="String" />
+      <Parameter Name="Approver_Br" Mode="In" Type="String" />
+      <Parameter Name="Br_date" Mode="In" Type="DateTime" />
+      <Parameter Name="AlreadyBorrowedSerialNumbers" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="UpdatePCBForBorrow1">
+      <Parameter Name="SerialNumbers" Mode="In" Type="String" />
+      <Parameter Name="Borrower" Mode="In" Type="String" />
+      <Parameter Name="Approver_Br" Mode="In" Type="String" />
+      <Parameter Name="Br_date" Mode="In" Type="DateTime" />
+      <Parameter Name="AlreadyBorrowedSerialNumbers" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <EntitySet Name="ExportedPCBs" EntityType="dataBaseTestModel.ExportedPCB" />
+    <FunctionImport Name="UpdateBorrowNe">
+      <Parameter Name="SerialNumbers" Mode="In" Type="String" />
+      <Parameter Name="Borrower" Mode="In" Type="String" />
+      <Parameter Name="Approver_Br" Mode="In" Type="String" />
+      <Parameter Name="Br_date" Mode="In" Type="DateTime" />
+      <Parameter Name="AlreadyBorrowedSerialNumbers" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="ReturnPCBToWarehouse">
+      <Parameter Name="SerialNumbers" Mode="In" Type="String" />
+      <Parameter Name="Repo" Mode="In" Type="String" />
+      <Parameter Name="Sheft" Mode="In" Type="String" />
+      <Parameter Name="Tray" Mode="In" Type="String" />
+      <Parameter Name="ReturnDate" Mode="In" Type="DateTime" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+  <EntityType Name="addPCB">
+    <Key>
+      <PropertyRef Name="SerialNumber" />
+    </Key>
+    <Property Name="SerialNumber" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="EntryDate" Type="DateTime" Precision="3" />
+    <Property Name="ExitDate" Type="DateTime" Precision="3" />
+    <Property Name="Repo" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="sheft" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="tray" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="Approver" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Approver_Br" Type="String" MaxLength="8" FixedLength="true" Unicode="true" />
+    <Property Name="Br_date" Type="DateTime" Precision="3" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="Borrower" Type="String" MaxLength="8" FixedLength="true" Unicode="true" />
+    <Property Name="UserOut" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ReturnDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <ComplexType Name="sp_SearchProduct_Result">
+    <Property Type="Int64" Name="STT" Nullable="true" />
+    <Property Type="String" Name="SerialNumber" Nullable="false" MaxLength="10" />
+    <Property Type="String" Name="Model" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="ErrorCode" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="ErrorDesc" Nullable="true" MaxLength="50" />
+    <Property Type="DateTime" Name="EntryDate" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="ExitDate" Nullable="true" Precision="23" />
+    <Property Type="String" Name="Repository" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="Sheft" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="Tray" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="Approver" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="BorrowStatus" Nullable="false" MaxLength="14" />
+  </ComplexType>
+  <ComplexType Name="sp_SearchProductBySerialNumber_Result">
+    <Property Type="Int64" Name="STT" Nullable="true" />
+    <Property Type="String" Name="Serial_Number" Nullable="false" MaxLength="10" />
+    <Property Type="String" Name="Model" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="Error_Code" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Error_Description" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Error_Description_2" Nullable="true" MaxLength="50" />
+    <Property Type="DateTime" Name="Entry_Date" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="Exit_Date" Nullable="true" Precision="23" />
+    <Property Type="String" Name="Repository" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="Shelf" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="Tray" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="Approver" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Borrower" Nullable="true" MaxLength="8" />
+    <Property Type="DateTime" Name="Borrow_Date" Nullable="true" Precision="23" />
+    <Property Type="String" Name="BorrowStatus" Nullable="false" MaxLength="14" />
+  </ComplexType>
+  <ComplexType Name="sp_SearchProduct_Result1">
+    <Property Type="Int64" Name="STT" Nullable="true" />
+    <Property Type="String" Name="SerialNumber" Nullable="false" MaxLength="10" />
+    <Property Type="String" Name="Model" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="ErrorCode" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="ErrorDesc" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="ErrorDesc2" Nullable="true" MaxLength="50" />
+    <Property Type="DateTime" Name="EntryDate" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="ExitDate" Nullable="true" Precision="23" />
+    <Property Type="String" Name="Repo" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="Sheft" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="Tray" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="Approver" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Borrower" Nullable="true" MaxLength="8" />
+    <Property Type="DateTime" Name="Borrow_Date" Nullable="true" Precision="23" />
+    <Property Type="String" Name="BorrowStatus" Nullable="false" MaxLength="14" />
+  </ComplexType>
+  <ComplexType Name="sp_Search_Product_Result">
+    <Property Type="Int64" Name="STT" Nullable="true" />
+    <Property Type="String" Name="SerialNumber" Nullable="false" MaxLength="10" />
+    <Property Type="String" Name="Model" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="ErrorCode" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="ErrorDesc" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="ErrorDesc2" Nullable="true" MaxLength="50" />
+    <Property Type="DateTime" Name="EntryDate" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="ExitDate" Nullable="true" Precision="23" />
+    <Property Type="String" Name="Repo" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="Sheft" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="Tray" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="Approver" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Borrower" Nullable="true" MaxLength="8" />
+    <Property Type="DateTime" Name="Borrow_Date" Nullable="true" Precision="23" />
+    <Property Type="String" Name="BorrowStatus" Nullable="false" MaxLength="14" />
+  </ComplexType>
+  <ComplexType Name="sp_SearchBySerialNumber_Result">
+    <Property Type="Int64" Name="STT" Nullable="true" />
+    <Property Type="String" Name="Serial_Number" Nullable="false" MaxLength="10" />
+    <Property Type="String" Name="Model" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="Error_Code" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Error_Description" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Error_Description_2" Nullable="true" MaxLength="50" />
+    <Property Type="DateTime" Name="Entry_Date" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="Exit_Date" Nullable="true" Precision="23" />
+    <Property Type="String" Name="Repository" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="Shelf" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="Tray" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="Approver" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Borrower" Nullable="true" MaxLength="8" />
+    <Property Type="DateTime" Name="Borrow_Date" Nullable="true" Precision="23" />
+    <Property Type="String" Name="BorrowStatus" Nullable="false" MaxLength="14" />
+  </ComplexType>
+  <ComplexType Name="sp_SearchBySN_Result">
+    <Property Type="Int64" Name="STT" Nullable="true" />
+    <Property Type="String" Name="Serial_Number" Nullable="false" MaxLength="10" />
+    <Property Type="String" Name="Model" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="Error_Code" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Error_Description" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Error_Description_2" Nullable="true" MaxLength="50" />
+    <Property Type="DateTime" Name="Entry_Date" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="Exit_Date" Nullable="true" Precision="23" />
+    <Property Type="String" Name="Repository" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="Shelf" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="Tray" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="Approver" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Borrower" Nullable="true" MaxLength="8" />
+    <Property Type="DateTime" Name="Borrow_Date" Nullable="true" Precision="23" />
+    <Property Type="String" Name="BorrowStatus" Nullable="false" MaxLength="14" />
+  </ComplexType>
+  <EntityType Name="ExportedPCB">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SerialNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="EntryDate" Type="DateTime" Precision="3" />
+    <Property Name="ExitDate" Type="DateTime" Precision="3" />
+    <Property Name="UserIn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="UserOut" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+</Schema>
